@@ -733,4 +733,64 @@ open class EasyTipView: UIView {
         return CGRect(x: bubbleFrame.origin.x + preferences.positioning.contentInsets.left, y: bubbleFrame.origin.y + preferences.positioning.contentInsets.top, width: contentSize.width, height: contentSize.height)
     }
 }
+
+public extension EasyTipView {
+    
+    /**
+     Presents an EasyTipView at a specific point within the specified superview.
+     
+     - parameter animated:  Pass true to animate the presentation.
+     - parameter point:     The CGPoint at which the EasyTipView will be anchored.
+     - parameter superview: A view within which the EasyTipView will be displayed.
+     - parameter text:      The text to be displayed.
+     - parameter preferences: The preferences which will configure the EasyTipView.
+     - parameter delegate:  The delegate.
+     */
+    class func show(animated: Bool = true, atPoint point: CGPoint, withinSuperview superview: UIView, text: String, preferences: Preferences = EasyTipView.globalPreferences, delegate: EasyTipViewDelegate? = nil) {
+        
+        let ev = EasyTipView(text: text, preferences: preferences, delegate: delegate)
+        ev.show(forPoint: point, withinSuperview: superview)
+    }
+}
+
+extension EasyTipView {
+    /**
+     Presents the EasyTipView at a specific point.
+     
+     - parameter animated:  Pass true to animate the presentation.
+     - parameter point:     The CGPoint at which the EasyTipView will be anchored.
+     - parameter superview: A view within which the EasyTipView will be displayed.
+     */
+    func show(animated: Bool = true, forPoint point: CGPoint, withinSuperview superview: UIView) {
+        
+        let initialTransform = preferences.animating.showInitialTransform
+        let finalTransform = preferences.animating.showFinalTransform
+        let initialAlpha = preferences.animating.showInitialAlpha
+        let damping = preferences.animating.springDamping
+        let velocity = preferences.animating.springVelocity
+        let view = UIView(frame: .init(x: point.x, y: point.y, width: 10, height: 10))
+        presentingView = view
+        arrange(withinSuperview: superview)
+        
+        transform = initialTransform
+        alpha = initialAlpha
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        addGestureRecognizer(tap)
+        
+        superview.addSubview(self)
+        
+        let animations : () -> () = {
+            self.transform = finalTransform
+            self.alpha = 1
+        }
+        
+        if animated {
+            UIView.animate(withDuration: preferences.animating.showDuration, delay: 0, usingSpringWithDamping: damping, initialSpringVelocity: velocity, options: [.curveEaseInOut], animations: animations, completion: nil)
+        }else{
+            animations()
+        }
+        
+    }
+}
 #endif
