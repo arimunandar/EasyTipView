@@ -111,7 +111,7 @@ EasyTipView.globalPreferences = preferences
 
 ```
 
-2) Secondly call the ``show(animated: forView: withinSuperview: text: preferences: delegate:)`` method:
+2.1) Secondly call the ``show(animated: forView: withinSuperview: text: preferences: delegate:)`` method:
 ```swift
 EasyTipView.show(forView: self.buttonB,
 withinSuperview: self.navigationController?.view,
@@ -119,7 +119,15 @@ text: "Tip view inside the navigation controller's view. Tap to dismiss!",
 preferences: preferences,
 delegate: self)
 ```
-
+2.2) Or call the ``show(animated:, atPoint point:, withinSuperview superview:, text:, preferences:, delegate: )``
+method:
+```swift
+EasyTipView.show(animated: Bool,
+ atPoint: CGPoint,
+ withinSuperview: UIView,
+ text: String, preferences: EasyTipView.Preferences,
+ delegate: (any EasyTipViewDelegate)?)
+```
 **Note that if you set the** ```EasyTipView.globalPreferences```**, you can ommit the** ```preferences``` **parameter in all calls. Additionally, you can also ommit the** ``withinSuperview`` **parameter and the** ``EasyTipView`` **will be shown within the main application window**.
 
 *Alternatively, if you want to dismiss the ``EasyTipView`` programmatically later on, you can use one of the instance methods:*
