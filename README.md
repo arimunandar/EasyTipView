@@ -22,8 +22,9 @@ Description
 5. [Usage](#usage)
 6. [Customizing the appearance](#customising)
 7. [Customising the presentation and dismissal animations](#customising-animations)
-8. [License](#license)
-9. [Contact](#contact)
+8. [Customising the dismissal of view](#customising-dismissal)
+9. [License](#license)
+10. [Contact](#contact)
 
 <a name="features"> Features </a>
 --------------
@@ -204,6 +205,15 @@ This produces the following animations:
 For more animations, checkout the example project.
 *Once you configured the animations, a good idea would be to __make these preferences global__, for all future instances of `EasyTipView` by assigning it to ```EasyTipView.globalPreferences```.*
 
+
+<a name="customising-dismissal"> Customising the dismissal of view </a>
+--------------
+
+```swift
+preferenses.dismissal.tapOutside = true
+preferenses.dismissal.swipeOutside = true
+preferenses.dismissal.timer = 3
+```
 
 <a name="license"> License </a>
 --------------
