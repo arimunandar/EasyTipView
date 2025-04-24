@@ -1,7 +1,7 @@
 #if canImport(UIKit)
 import UIKit
 
-public protocol EasyTipViewDelegate : class {
+public protocol EasyTipViewDelegate : AnyObject {
     func easyTipViewDidTap(_ tipView: EasyTipView)
     func easyTipViewDidDismiss(_ tipView : EasyTipView)
 }
